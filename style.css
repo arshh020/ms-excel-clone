@@ -117,12 +117,14 @@ body{
     width: 30px;
     height: calc(75vh - 30px);
     border: 1px solid lightgray;
+    overflow: hidden;
 }
 
 .input-cell-container{
     width: calc(100vw - 30px);
     height: calc(75vh - 30px);
     border: 1px solid lightgray;
+    overflow: hidden;
 }
 
 .sheet-bar{
@@ -177,7 +179,7 @@ body{
 }
 
 .column-name{
-    width: 100px;
+    min-width: 100px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -189,7 +191,7 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 25px;
+    min-height: 25px;
     border-bottom: 1px solid lightgray;
 }
 
@@ -198,8 +200,8 @@ body{
 }
 
 .input-cell{
-    width: 100px;
-    height: 25px;
+    min-width: 100px;
+    min-height: 25px;
     border-right: 1px solid lightgray;
     border-bottom: 1px solid lightgray;
 }
