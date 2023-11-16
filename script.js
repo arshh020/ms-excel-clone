@@ -13,7 +13,7 @@ $(document).ready(function () {
             n = Math.floor((n - 1) / 26);
         }
 
-        let column = $(`<div class="column-name" id="colCod-${ans} colId- ${i}">${ans}</div>`);
+        let column = $(`<div class="column-name colId-${i}" id="colCod-${ans}">${ans}</div>`);
         $(".column-name-container").append(column);
         let row = $(`<div class="row-name" id="rowId-${i}">${i}</div>`);
         $(".row-name-container").append(row);
@@ -21,13 +21,14 @@ $(document).ready(function () {
     }
 
      for(let i = 1; i<=50; i++){
-        let cell = $(`<div class="cell-row"></div>`)
+        let row = $(`<div class="cell-row"></div>`)
         for(let j = 1; j<=50; j++){
-                let cellrow = $(`<div class="input-cell" contenteditable="true"></div>`);
-                cell.append(cellrow);
+                let colCode = $(`.colId-${j}`).attr("id").split("-")[1]; 
+                let column = $(`<div class="input-cell" contenteditable="true" id="row-${i}-col${j}" data="code-${colCode}"></div>`);
+                row.append(column);
             }
     
-            CellContainer.append(cell);
+            CellContainer.append(row);
         } 
     
 
