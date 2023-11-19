@@ -2,7 +2,7 @@ $(document).ready(function () {
 
     let CellContainer = $(".input-cell-container");
 
-    for (let i = 1; i <= 50; i++) {
+    for (let i = 1; i <= 100; i++) {
         let ans = "";
 
         let n = i;
@@ -20,16 +20,16 @@ $(document).ready(function () {
 
     }
 
-     for(let i = 1; i<=50; i++){
+     for(let i = 1; i<=100; i++){
         let row = $(`<div class="cell-row"></div>`)
-        for(let j = 1; j<=50; j++){
+        for(let j = 1; j<=100; j++){
                 let colCode = $(`.colId-${j}`).attr("id").split("-")[1]; 
-                let column = $(`<div class="input-cell" contenteditable="true" id="row-${i}-col${j}" data="code-${colCode}"></div>`);
+                let column = $(`<div class="input-cell" contenteditable="false" id="row-${i}-col${j}" data="code-${colCode}"></div>`);
                 row.append(column);
             }
     
             CellContainer.append(row);
-        } 
+        }  
 
         $(".align-icon").click(function(){
             $(".align-icon.selected").removeClass("selected");
@@ -40,14 +40,106 @@ $(document).ready(function () {
             $(this).toggleClass("selected");
         });
 
-        $(".input-cell").click(function(){
+        $(".input-cell").click(function(e){     //e = event
+            // console.log(e);
+            if(e.ctrlKey){
+                let [rowId, colId] = getRowCol(this);
+                if(rowId > 1){
+                    let topcellSelected = $(`#row-${rowId - 1}-col-${colId}`).hasClass("selected");
+                    if(topcellSelected){
+                        $(this).addClass("top-cell-selected");
+                        $(`#row-${rowId - 1}-col-${colId}`).addClass("bottom-cell-selected"); //given to the cell above
+                    }
+                }
+                if(rowId < 100){
+                    let bottomcellSelected = $(`#row-${rowId + 1}-col-${colId}`).hasClass("selected");
+                    if(bottomcellSelected){
+                        $(this).addClass("bottom-cell-selected");
+                        $(`#row-${rowId + 1}-col-${colId}`).addClass("top-cell-selected"); // i am selected for bottom cell
+                    }
+                }
+                if(colId < 100){
+                    let rightcellSelected = $(`#row-${rowId}-col-${colId + 1}`).hasClass("selected");
+                    if(rightcellSelected){
+                        $(this).addClass("right-cell-selected");
+                        $(`#row-${rowId}-col-${colId + 1}`).addClass("left-cell-selected");
+                    }
+                }   
+                if(colId > 1){
+                    let leftcellSelected = $(`#row-${rowId}-col-${colId - 1}`).hasClass("selected");
+                    if(leftcellSelected){
+                        $(this).addClass("left-cell-selected");
+                        $(`#row-${rowId}-col-${colId - 1}`).addClass("right-cell-selected");
+                    }
+                }
+            }
+
+            else{
+            $(".input-cell.selected").removeClass("selected");
+            }
+            $(this).addClass("selected");
+        });
+
+        $(".input-cell").dblclick(function(){
             $(".input-cell.selected").removeClass("selected");
             $(this).addClass("selected");
-
+            $(this).attr("contenteditable", "true");
+            $(this).focus();
         });
-    
+
+        $(".input-cell").blur(function(){
+            $(".input-cell.selected").attr("contenteditable", "false");
+        })
+
+        $(".input-cell-container").scroll(function(){
+            $(".column-name-container").scrollLeft(this.scrollLeft);
+            $(".row-name-container").scrollTop(this.scrollTop);
+        });
+        
+ 
 
 });
+
+function getRowCol(ele){
+    let idArray = $(ele).attr("id").split("-");     //row-1-col-1 (1st & 3rd index)
+    let rowId = parseInt(idArray[1]);
+    let colId = parseInt(idArray[3]);
+    return [rowId, colId];
+}
+
+function updateCell(property, value){
+    $(".input-cell.selected").each(function(){      //each = for loop
+        $(this).css(property, value);
+
+    })
+}
+
+$(".icon-bold").click(function(){
+    if($(this).hasClass("selected")){
+        updateCell("font-weight", "");
+    }
+    else{
+        updateCell("font-weight", "bold");
+    }
+})
+
+$(".icon-italic").click(function(){
+    if($(this).hasClass("selected")){
+        updateCell("font-style", "");
+    }
+    else{
+        updateCell("font-style", "italic");
+    }
+})
+
+$(".icon-underlined").click(function(){
+    if($(this).hasClass("selected")){
+        updateCell("text-decoration", "");
+    }
+    else{
+        updateCell("text-decoration", "underline");
+    }
+})
 
 
 
