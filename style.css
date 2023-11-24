@@ -73,19 +73,26 @@ body{
 .menu-icon:hover{
     background-color: lightgray;
     cursor: pointer;
+    .color-picker{
+        background-color: lightgray;
+    }
+}
+
+.menu-icon.selected{
+    background-color: lightgray;
+    .color-picker{
+        background-color: lightgray;
+    }
 }
 
 .font-family-selector{
     width: 150px;
+    font-family: 'Noto Sans';
 }
 
 .selector{
     height : 30px;
     font-size: 18px;
-}
-
-.selector.icon-color-fill{
-    height : 25px;
 }
 
 .selector option{
@@ -170,10 +177,10 @@ body{
 .sheet-tab-container{
     border: 1px solid lightgray;
     width: calc(100vw - 110px);
+    display: flex;
 }
 
 .sheet-tab{
-    border-bottom: 4px solid #107c41;
     padding-left: 10px;
     padding-right: 10px;
     display: flex;
@@ -184,8 +191,17 @@ body{
     border-right: 1px solid lightgray;
 }
 
-.sheet-tab:hover{
+.sheet-tab.selected{
+    border-bottom: 4px solid #107c41;
+}
+
+.sheet-tab.selected:hover{
     cursor: default;
+}
+
+.sheet-tab:hover{
+    cursor: pointer;
+    background-color: lightgray;
 }
 
 .column-name{
@@ -214,7 +230,9 @@ body{
     min-height: 25px;
     border-right: 1px solid lightgray;
     border-bottom: 1px solid lightgray;
-    /* outline-color: #0c5e31; */
+    outline-color: #0c5e31;
+    font-size: 14px;
+    font-family: 'Noto Sans';
 }
 
 .input-cell.selected{
@@ -247,24 +265,35 @@ body{
     outline-color: #0c5e31;
 }
 
-.menu-icon.selected{
-    background-color: lightgray;
-}
-
 .input-cell.top-cell-selected{
     border-top: none;          /* your top cell is selected */
 }
 
 .input-cell.bottom-cell-selected{
-    border-bottom: 2px solid lightgray;     /* your bottom cell is selected */
+    border-bottom: 1px solid lightgray;     /* your bottom cell is selected */
 }
 
 .input-cell.right-cell-selected{
-    border-right: 2px solid lightgray;      /* your right cell is selected */
+    border-right: 1px solid lightgray;      /* your right cell is selected */
 }
 
 .input-cell.left-cell-selected{
     border-left: none;      /* your left cell is selected */
+}
+
+.color-picker{
+    position: absolute;
+    width: 26px;
+    height: 12px;
+    border: none;
+    padding: 0;
+    top: 30px;
+    left: 9px;
+    cursor: pointer;
+}
+
+.icon-color-fill, .icon-color-text{
+    position: relative;
 }
 
 
